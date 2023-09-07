@@ -1,12 +1,10 @@
 def solution(players, callings):
-    # hash, 시간 복잡도 O(1)
-    player_dict = {player: rank for rank, player in enumerate(players)}
-    rank_dict = {rank: player for rank, player in enumerate(players)}
+    pla_dic = {key: i for i, key in enumerate(players)}
 
-    for call in callings:
-        rank = player_dict[call]
+    for p in callings:
+        c = pla_dic[p]
+        pla_dic[p] -= 1
+        pla_dic[players[c-1]] += 1
+        players[c-1], players[c] = players[c], players[c-1]
 
-        player_dict[rank_dict[rank - 1]], player_dict[rank_dict[rank]] = player_dict[rank_dict[rank]], player_dict[rank_dict[rank - 1]]
-        rank_dict[rank - 1], rank_dict[rank] = rank_dict[rank], rank_dict[rank - 1]
-    
-    return [*rank_dict.values()]
+    return players
